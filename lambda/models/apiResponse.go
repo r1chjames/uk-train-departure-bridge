@@ -80,7 +80,7 @@ type ParsedResponse struct {
 }
 
 type Departures struct {
-	OperatorName       	string `json:"operator"`
+	Notes		       	string `json:"notes"`
 	AimedDepartureTime 	string `json:"aimedDepartureTime"`
 	DestinationName    	string `json:"destinationStation"`
 	CallingAt	   		string `json:"callingAt"`

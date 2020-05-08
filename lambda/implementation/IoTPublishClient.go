@@ -3,6 +3,7 @@ package implementation
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/iotdataplane"
@@ -21,7 +22,7 @@ func createIotSession() *iotdataplane.IoTDataPlane {
 func PublishMessageToIot(appConfig models.AppConfig, message models.ParsedResponse) {
 	reqBodyBytes := new(bytes.Buffer)
 	json.NewEncoder(reqBodyBytes).Encode(message)
-
+	fmt.Println(reqBodyBytes)
 	payload := reqBodyBytes.Bytes()
 	qos := int64(1)
 
