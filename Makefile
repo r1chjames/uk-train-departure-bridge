@@ -1,75 +1,57 @@
--include .env
+init:
+	rm -rf .terraform
+	terraform --version
+	mkdir -p ./creds
+	echo ${SERVICEACCOUNT} | base64 -d > ./creds/serviceaccount.json
+	terraform init
 
-BUILD := $(shell git rev-parse --short HEAD)
-PROJECTNAME := $(shell basename "$(PWD)")
+plan:
+	terraform plan \
+		-var-file ${ENVIRONMENT}.tfvars \
+		-out "planfile" \
+		-var env=${ENVIRONMENT}
 
-# Go related variables.
-GOBASE := $(shell pwd)
-GOPATH := $(GOBASE)/vendor:$(GOBASE)
-GOBIN := $(GOBASE)/bin
-GOFILES := $(wildcard *.go)
+apply: plan
+	terraform apply -input=false "planfile"
 
-# Make is verbose in Linux. Make it silent.
-MAKEFLAGS += --silent
-# Redirect error output to a file, so we can show it in development mode.
-STDERR := /tmp/.$(PROJECTNAME)-stderr.txt
+validate:
+	terraform validate
 
-.PHONY: build clean deploy
+fmt:
+	terraform fmt
 
-## install: Install missing dependencies. Runs `go get` internally. e.g; make install get=github.com/foo/bar
-install: go-get
+lint: fmt
 
-deploy:
+move_local_dev_artifacts:
+	rm -rf build/*
+	cp ../visitor-webapp/webapp.tar.gz build
+	cp ../go-apps/src/visitor-lambdas/*.zip build
+	make unpack_webapp
 
-build: clean install
+move_artifacts:
+	mkdir build
+	mv visitor-lambdas/*.zip build/
+	mv visitor-webapp/*.tar.gz build/
 
-## compile: Compile the binary.
-compile:
-	@-touch $(STDERR)
-	@-rm $(STDERR)
-	@-$(MAKE) -s go-compile 2> $(STDERR)
-	@cat $(STDERR) | sed -e '1s/.*/\nError:\n/'  | sed 's/make\[.*/ /' | sed "/^/s/^/     /" 1>&2
+build_lambdas:
+	git clone --single-branch --branch ${CI_COMMIT_REF_NAME} https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/r1chjames/visitor-lambdas.git
+	cd visitor-lambdas && \
+	echo 'Using branch $(shell git rev-parse --abbrev-ref HEAD)' && \
+	make build_all
 
-## exec: Run given command, wrapped with custom GOPATH. e.g; make exec run="go test ./..."
-exec:
-	@GOPATH=$(GOPATH) GOBIN=$(GOBIN) $(run)
+build_webapp:
+	git clone --single-branch --branch ${CI_COMMIT_REF_NAME} https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/r1chjames/visitor-webapp.git
+	cd visitor-webapp && \
+	echo 'Using branch $(shell git rev-parse --abbrev-ref HEAD)' && \
+	make build_all
 
-## clean: Clean build files. Runs `go clean` internally.
-clean:
-	@-rm $(GOBIN)/$(PROJECTNAME) 2> /dev/null
-	@-$(MAKE) go-clean
+build_artifacts: build_lambdas build_webapp move_artifacts
 
-go-compile: go-get go-build
+unpack_webapp:
+	mkdir build/webapp && \
+	tar -xvzf build/webapp.tar.gz -C build/webapp
 
-go-build:
-	@echo "  >  Building binary..."
-	@GOPATH=$(GOPATH) GOBIN=$(GOBIN) go build $(LDFLAGS) -o $(GOBIN)/$(PROJECTNAME) $(GOFILES)
-
-go-generate:
-	@echo "  >  Generating dependency files..."
-	@GOPATH=$(GOPATH) GOBIN=$(GOBIN) go generate $(generate)
-
-go-get:
-	@echo "  >  Checking if there is any missing dependencies..."
-	@GOPATH=$(GOPATH) GOBIN=$(GOBIN) go get $(get)
-	go mod vendor
-
-go-install:
-	@GOPATH=$(GOPATH) GOBIN=$(GOBIN) go install $(GOFILES)
-
-go-clean:
-	@echo "  >  Cleaning build cache"
-	@GOPATH=$(GOPATH) GOBIN=$(GOBIN) go clean
-
-go-test:
-	@echo "Running tests"
-	@GOPATH=$(GOPATH) GOBIN=$(GOBIN) go test ./...
-
-.PHONY: help
-all: help
-help: Makefile
-	@echo
-	@echo " Choose a command run in "$(PROJECTNAME)":"
-	@echo
-	@sed -n 's/^##//p' $< | column -t -s ':' |  sed -e 's/^/ /'
-	@echo
+build_tf_image:
+	docker build -t registry.gitlab.com/r1chjames/visitor-terraform/terraform_runner:0.12.23 .
+	docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
+	docker push registry.gitlab.com/r1chjames/visitor-terraform/terraform_runner:0.12.23
