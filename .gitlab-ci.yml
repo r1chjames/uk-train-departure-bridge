@@ -16,10 +16,10 @@ stages:
 build:
   stage: build
   script:
-    - make build_artifacts
+    - make prepare_artifacts
   artifacts:
     paths:
-      - build/
+      - terraform/build/
 
 tf_validate:
   stage: tf_validate
@@ -45,7 +45,6 @@ tf_plan:
 tf_apply:
   stage: tf_apply
   script:
-    - make unpack_webapp
     - make apply
   dependencies:
     - build
