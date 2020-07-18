@@ -15,10 +15,6 @@ variable future_train_count {
   type = number
 }
 
-variable refresh_interval_sec {
-  type = number
-}
-
 variable operating_hours {
   type = string
 }
@@ -27,7 +23,7 @@ variable topic {
   type = string
 }
 
-variable trigger_interval_in_mins {
+variable refresh_interval_in_mins {
   type = string
 }
 
