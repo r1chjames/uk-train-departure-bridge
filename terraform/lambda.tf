@@ -8,13 +8,13 @@ resource "aws_lambda_function" "uk_train_departure_lambda" {
 
   environment {
     variables = {
-      DEPARTURE_STATION = upper(var.departure_station)
+      DEPARTURE_STATION   = upper(var.departure_station)
       DESTINATION_STATION = upper(var.destination_station)
-      FUTURE_TRAIN_COUNT = var.future_train_count
-      OPERATING_HOURS = var.operating_hours
-      IOT_TOPIC = "departures/train/new"
-      API_KEY = var.transport_api_key
-      APP_ID = var.transport_api_app_id
+      FUTURE_TRAIN_COUNT  = var.future_train_count
+      OPERATING_HOURS     = var.operating_hours
+      IOT_TOPIC           = "departures/train/new"
+      API_KEY             = var.transport_api_key
+      APP_ID              = var.transport_api_app_id
     }
   }
 

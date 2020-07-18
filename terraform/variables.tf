@@ -4,23 +4,23 @@ variable "env" {
 }
 
 variable departure_station {
-  type    = string
+  type = string
 }
 
 variable destination_station {
-  type    = string
+  type = string
 }
 
 variable future_train_count {
-  type    = number
+  type = number
 }
 
 variable refresh_interval_sec {
-  type    = number
+  type = number
 }
 
 variable operating_hours {
-  type    = string
+  type = string
 }
 
 variable transport_api_key {

@@ -4,17 +4,20 @@
     {
       "Effect": "Allow",
       "Action": "iot:Connect",
-      "Resource": "arn:aws:iot:eu-west-1:${account_id}:client/esp32"
+      "Resource": "arn:aws:iot:eu-west-1:${account_id}:client/${device}"
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "iot:Subscribe",
+        "iot:Receive"
+      ],
+      "Resource": "arn:aws:iot:eu-west-1:${account_id}:topic/departures/train/new"
     },
     {
       "Effect": "Allow",
       "Action": "iot:Subscribe",
-      "Resource": "arn:aws:iot:eu-west-1:${account_id}:topic/departures/train/new"
-    },
-	{
-      "Effect": "Allow",
-      "Action": "iot:Receive",
-      "Resource": "arn:aws:iot:eu-west-1:${account_id}:topic/departures/train/new"
+      "Resource": "arn:aws:iot:eu-west-1:${account_id}:topicfilter/departures/train/new"
     }
   ]
 }
