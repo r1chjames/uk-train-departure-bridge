@@ -1,36 +1,35 @@
 init:
-	rm -rf .terraform
-	terraform --version
-	mkdir -p ./creds
-	echo ${SERVICEACCOUNT} | base64 -d > ./creds/serviceaccount.json
-	terraform init
+	cd terraform && \
+	make init
 
 plan:
-	terraform plan \
-		-var-file ${ENVIRONMENT}.tfvars \
-		-out "planfile" \
-		-var env=${ENVIRONMENT}
+	cd terraform && \
+	make plan
 
 apply: plan
-	terraform apply -input=false "planfile"
+	cd terraform && \
+	make apply
 
 validate:
-	terraform validate
+	cd terraform && \
+	make validate
 
 fmt:
-	terraform fmt
+	cd terraform && \
+	make fmt
 
 lint: fmt
 
 copy_artifacts:
-	rm -rf build/*
-	cp lambda/*.zip build
-
+	rm -rf terraform/build/
+	mkdir -p terraform/build
+	zip -j terraform/build/uk-train-departure-lambda.zip lambda/bin/uk-train-departure-lambda
+	
 build_lambda:
 	cd lambda && \
-	make build_all
+	GOOS=linux GOARCH=amd64 CGO_ENABLED=0 make compile
 
-build_artifacts: build_lambda copy_artifacts
+prepare_artifacts: build_lambda copy_artifacts
 
 build_tf_image:
 	docker build -t registry.gitlab.com/r1chjames/visitor-terraform/terraform_runner:0.12.23 .

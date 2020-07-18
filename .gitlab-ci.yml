@@ -1,0 +1,56 @@
+image:
+  name: registry.gitlab.com/r1chjames/uk-train-departure-bridge/terraform_runner:0.12.23
+  entrypoint:
+    - '/usr/bin/env'
+    - 'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+
+before_script:
+  - make init
+
+stages:
+  - build
+  - tf_validate
+  - tf_plan
+  - tf_apply
+
+build:
+  stage: build
+  script:
+    - make build_artifacts
+  artifacts:
+    paths:
+      - build/
+
+tf_validate:
+  stage: tf_validate
+  script:
+    - make validate
+  dependencies:
+    - build
+
+tf_plan:
+  stage: tf_plan
+  script:
+    - make plan
+  dependencies:
+    - build
+    - tf_validate
+  only:
+    - master
+    - develop
+  artifacts:
+    paths:
+      - planfile
+
+tf_apply:
+  stage: tf_apply
+  script:
+    - make unpack_webapp
+    - make apply
+  dependencies:
+    - build
+    - tf_plan
+  only:
+    - master
+    - develop
+  when: manual

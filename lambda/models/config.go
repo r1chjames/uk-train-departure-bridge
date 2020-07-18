@@ -4,7 +4,6 @@ type AppConfig struct {
 	DepartureStation string
 	DestinationStation string
 	FutureTrainCount int
-	RefreshIntervalSec int
 	OperatingHours string
 	IotTopic string
 	TransportApiUrl string

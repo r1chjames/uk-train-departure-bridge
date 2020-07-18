@@ -16,3 +16,11 @@ main
 
 # Output of the go coverage tool, specifically when used with LiteIDE
 *.out
+
+local_tf.sh
+
+terraform/.terraform/
+terraform/build/
+
+creds/
+.idea/

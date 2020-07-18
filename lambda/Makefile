@@ -43,7 +43,7 @@ go-compile: go-get go-build
 
 go-build:
 	@echo "  >  Building binary..."
-	@GOPATH=$(GOPATH) GOBIN=$(GOBIN) go build $(LDFLAGS) -o $(GOBIN)/$(PROJECTNAME) $(GOFILES)
+	GOPATH=$(GOPATH) GOBIN=$(GOBIN) go build $(LDFLAGS) -o $(GOBIN)/$(PROJECTNAME) $(GOFILES)
 
 go-generate:
 	@echo "  >  Generating dependency files..."
@@ -52,7 +52,7 @@ go-generate:
 go-get:
 	@echo "  >  Checking if there is any missing dependencies..."
 	@GOPATH=$(GOPATH) GOBIN=$(GOBIN) go get $(get)
-	go mod vendor
+	go mod download
 
 go-install:
 	@GOPATH=$(GOPATH) GOBIN=$(GOBIN) go install $(GOFILES)
