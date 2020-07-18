@@ -29,7 +29,7 @@ data "template_file" "iot_client_subscribe_policy_template" {
   template = file("${path.module}/templates/iot_client_policy.json.tpl")
   vars = {
     account_id = data.aws_caller_identity.current.account_id
-    device = aws_iot_thing.platform_sign_1.name
+    device     = aws_iot_thing.platform_sign_1.name
   }
 }
 
