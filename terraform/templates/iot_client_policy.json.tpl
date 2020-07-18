@@ -12,12 +12,12 @@
         "iot:Subscribe",
         "iot:Receive"
       ],
-      "Resource": "arn:aws:iot:eu-west-1:${account_id}:topic/departures/train/new"
+      "Resource": "arn:aws:iot:eu-west-1:${account_id}:topic/${topic}"
     },
     {
       "Effect": "Allow",
       "Action": "iot:Subscribe",
-      "Resource": "arn:aws:iot:eu-west-1:${account_id}:topicfilter/departures/train/new"
+      "Resource": "arn:aws:iot:eu-west-1:${account_id}:topicfilter/${topic}"
     }
   ]
 }

@@ -30,6 +30,7 @@ data "template_file" "iot_client_subscribe_policy_template" {
   vars = {
     account_id = data.aws_caller_identity.current.account_id
     device     = aws_iot_thing.platform_sign_1.name
+    topic      = var.topic
   }
 }
 

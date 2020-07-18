@@ -23,6 +23,14 @@ variable operating_hours {
   type = string
 }
 
+variable topic {
+  type = string
+}
+
+variable trigger_interval_in_mins {
+  type = string
+}
+
 variable transport_api_key {
   type = string
 }
