@@ -40,7 +40,7 @@ tf_plan:
     - develop
   artifacts:
     paths:
-      - planfile
+      - terraform/planfile
 
 tf_apply:
   stage: tf_apply
