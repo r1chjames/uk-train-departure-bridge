@@ -1,7 +1,7 @@
 resource "aws_cloudwatch_event_rule" "every_five_minutes" {
   name                = "every-five-minutes"
   description         = "Fires every five minutes"
-  schedule_expression = "rate(${var.refresh_interval_in_mins} minutes)"
+  schedule_expression = "rate(${var.refresh_interval_in_mins})"
 }
 
 resource "aws_cloudwatch_event_target" "check_foo_every_five_minutes" {
