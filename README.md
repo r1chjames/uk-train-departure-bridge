@@ -41,4 +41,5 @@ If deploying using Terraform locally, these need to be set up as environment var
 * Provide Arduino sketch that subscribes to MQTT topic and displays train info in a format similar to the UK train platform signs.
 
 ***
+
 * Disclaimer: Make sure you set up billing alarms on your AWS account as I can't be held responsible for your AWS bill. See Amazon's article [here](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/monitor_estimated_charges_with_cloudwatch.html).
