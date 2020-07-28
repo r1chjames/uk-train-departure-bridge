@@ -21,6 +21,7 @@ local_tf.sh
 
 terraform/.terraform/
 terraform/build/
+terraform/planfile
 
 creds/
 .idea/
