@@ -1,5 +1,4 @@
 # UK Train Departure Bridge
-***
 
 This repo contains a set of deployable AWS components that provide the ability to perform API requests to the UK Transport API and write the data to an IoT (MQTT) topic to allow simple IoT devices such as the ESP32 to subscribe and receive this data.
 
@@ -37,6 +36,9 @@ If you are using GitLab CI, these will need to be set up as CI variables. If you
 
 ## To do
 * Provide Arduino sketch that subscribes to MQTT topic and displays train info in a format similar to the UK train platform signs.
+&nbsp;
+&nbsp;
+&nbsp;
 ***
 
 *Disclaimer: Make sure you set up billing alarms on your AWS account as I can't be held responsible for your AWS bill. See Amazon's article [here](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/monitor_estimated_charges_with_cloudwatch.html).*
