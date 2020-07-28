@@ -25,11 +25,9 @@ The AWS components are deployed using Terraform which can be executed using the 
 | TF_VAR_transport_api_app_id | Terraform variable that contains the Transport API Application ID| a2473907 |
 | TF_VAR_transport_api_key | Terraform variable that contains the Transport API Application Keys | ZS2XKMQT5QEF3VSX8CJTURBR2LVTDDH9 |
 
-If using GitLab CI, these will need to be set up as CI variables
-If deploying using Terraform locally, these need to be set up as environment variables or passed into the running process
+If you are using GitLab CI, these will need to be set up as CI variables. If you are deploying using Terraform locally, these need to be set up as environment variables or passed into the running process.
 
 ### Build
-
 * GitLab CI will automatically build, validate, and plan the Terraform against the provided AWS account. The apply step is manual and needs to be instantiated once the previous steps have completed. This will automatically provision all the required infrastructure components on AWS.
 
 * A local Terraform apply will perform the same but is run by executing `make plan` and `make apply` from the repository root.
@@ -37,9 +35,8 @@ If deploying using Terraform locally, these need to be set up as environment var
 * A successful Terraform apply will print out the certificate, private key, and public keys of the IoT client that can then be used to connect and subscribe to the IoT MQTT topic. An example of how to do this can be found [here](https://aws.amazon.com/blogs/compute/building-an-aws-iot-core-device-using-aws-serverless-and-an-esp32/)
 
 
-## To do:
+## To do
 * Provide Arduino sketch that subscribes to MQTT topic and displays train info in a format similar to the UK train platform signs.
-
 ***
 
-* Disclaimer: Make sure you set up billing alarms on your AWS account as I can't be held responsible for your AWS bill. See Amazon's article [here](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/monitor_estimated_charges_with_cloudwatch.html).
+*Disclaimer: Make sure you set up billing alarms on your AWS account as I can't be held responsible for your AWS bill. See Amazon's article [here](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/monitor_estimated_charges_with_cloudwatch.html).*
