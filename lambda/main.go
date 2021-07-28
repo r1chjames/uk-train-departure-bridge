@@ -1,13 +1,16 @@
 package main
 
 import (
-	"github.com/aws/aws-lambda-go/lambda"
+	"log"
 	"uk-train-departure-lambda/implementation"
 	"uk-train-departure-lambda/models"
 	"uk-train-departure-lambda/utils"
+
+	"github.com/aws/aws-lambda-go/lambda"
 )
 
 func main() {
+	log.Printf("Running...")
 	lambda.Start(fetchTrainTimes)
 }
 

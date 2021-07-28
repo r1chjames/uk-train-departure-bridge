@@ -15,8 +15,7 @@ import (
 func buildApiRequest(config models.AppConfig) string {
 	req, err := http.NewRequest("GET", fmt.Sprintf("https://transportapi.com/v3/uk/train/station/%s/live.json", config.DepartureStation), nil)
 	if err != nil {
-		log.Print(err)
-		os.Exit(1)
+		log.Fatal(err)
 	}
 
 	query := req.URL.Query()
@@ -32,7 +31,7 @@ func parseRequestBodyIntoApiResponseStruct(body []byte) models.ApiResponse {
 
 	var apiResponse models.ApiResponse
 	if err := json.Unmarshal(body, &apiResponse); err != nil {
-		fmt.Printf("Failed marshalling the API response %s\n", err)
+		log.Fatalf("Failed marshalling the API response %s\n", err)
 	}
 	return apiResponse
 }
@@ -41,18 +40,18 @@ func parseRequestBodyIntoApiDestinationResponseStruct(body []byte) models.Destin
 
 	var apiResponse models.DestinationList
 	if err := json.Unmarshal(body, &apiResponse); err != nil {
-		fmt.Printf("Failed marshalling the API response %s\n", err)
+		log.Fatalf("Failed marshalling the API response %s\n", err)
 	}
 	return apiResponse
 }
 
 func performApiRequest(apiUrl string) []byte {
 	resp, err := http.Get(apiUrl)
-	fmt.Printf("Making API request to %s\n", apiUrl)
+	log.Printf("Making API request to %s\n", apiUrl)
 
 	var body []byte
 	if err != nil {
-		fmt.Printf("The HTTP request failed with error %s\n", err)
+		log.Fatalf("The HTTP request failed with error %s\n", err)
 	} else {
 		body, _ = ioutil.ReadAll(resp.Body)
 	}
@@ -62,9 +61,9 @@ func performApiRequest(apiUrl string) []byte {
 func QueryUpcomingTrains(config models.AppConfig) (interface{}, error) {
 
 	apiUrl := buildApiRequest(config)
-	fmt.Printf("API request URL %s", apiUrl)
+	log.Printf("API request URL %s", apiUrl)
 	body := performApiRequest(apiUrl)
-	fmt.Printf("API response body %s", body)
+	log.Printf("API response body %s", body)
 	entireStruct := parseRequestBodyIntoApiResponseStruct(body)
 	return parseFullRequest(config, entireStruct), nil
 }
