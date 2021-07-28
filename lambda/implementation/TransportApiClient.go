@@ -6,7 +6,6 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
-	"os"
 	"strings"
 	"uk-train-departure-lambda/models"
 	"uk-train-departure-lambda/utils"
