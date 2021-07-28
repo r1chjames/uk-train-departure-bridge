@@ -48,6 +48,7 @@ func parseRequestBodyIntoApiDestinationResponseStruct(body []byte) models.Destin
 
 func performApiRequest(apiUrl string) []byte {
 	resp, err := http.Get(apiUrl)
+	fmt.Printf("Making API request to %s\n", apiUrl)
 
 	var body []byte
 	if err != nil {
@@ -61,7 +62,9 @@ func performApiRequest(apiUrl string) []byte {
 func QueryUpcomingTrains(config models.AppConfig) (interface{}, error) {
 
 	apiUrl := buildApiRequest(config)
+	fmt.Printf("API request URL: %s", apiUrl)
 	body := performApiRequest(apiUrl)
+	fmt.Printf("API response body: %s", body)
 	entireStruct := parseRequestBodyIntoApiResponseStruct(body)
 	return parseFullRequest(config, entireStruct), nil
 }
