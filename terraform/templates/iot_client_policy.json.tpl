@@ -12,12 +12,17 @@
         "iot:Subscribe",
         "iot:Receive"
       ],
-      "Resource": "arn:aws:iot:eu-west-1:${account_id}:topic/${topic}"
+      "Resource": "arn:aws:iot:eu-west-1:${account_id}:topic/${departures_topic}"
     },
     {
       "Effect": "Allow",
       "Action": "iot:Subscribe",
-      "Resource": "arn:aws:iot:eu-west-1:${account_id}:topicfilter/${topic}"
+      "Resource": "arn:aws:iot:eu-west-1:${account_id}:topicfilter/${departures_topic}"
+    },
+    {
+      "Effect": "Allow",
+      "Action": "iot:Publish",
+      "Resource": "arn:aws:iot:eu-west-1:${account_id}:topicfilter/${commands_topic}"
     }
   ]
 }

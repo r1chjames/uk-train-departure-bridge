@@ -28,9 +28,10 @@ resource "aws_iot_policy_attachment" "client_subscribe" {
 data "template_file" "iot_client_subscribe_policy_template" {
   template = file("${path.module}/templates/iot_client_policy.json.tpl")
   vars = {
-    account_id = data.aws_caller_identity.current.account_id
-    device     = aws_iot_thing.platform_sign_1.name
-    topic      = var.topic
+    account_id       = data.aws_caller_identity.current.account_id
+    device           = aws_iot_thing.platform_sign_1.name
+    departures_topic = var.departures_topic
+    commands_topic   = var.commands_topic
   }
 }
 

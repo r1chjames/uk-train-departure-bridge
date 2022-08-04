@@ -19,9 +19,14 @@ variable operating_hours {
   type = string
 }
 
-variable topic {
+variable departures_topic {
   type = string
 }
+
+variable commands_topic {
+  type = string
+}
+
 
 variable refresh_interval_in_mins {
   type = string
