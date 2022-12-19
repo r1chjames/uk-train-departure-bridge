@@ -11,10 +11,9 @@ resource "aws_lambda_function" "uk_train_departure_lambda" {
       DEPARTURE_STATION   = upper(var.departure_station)
       DESTINATION_STATION = upper(var.destination_station)
       FUTURE_TRAIN_COUNT  = var.future_train_count
-      OPERATING_HOURS     = var.operating_hours
       IOT_TOPIC           = var.topic
-      API_KEY             = var.transport_api_key
-      APP_ID              = var.transport_api_app_id
+      API_KEY             = var.api_username
+      APP_ID              = var.api_password
     }
   }
 

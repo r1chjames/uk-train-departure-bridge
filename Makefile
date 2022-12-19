@@ -32,6 +32,6 @@ build_lambda:
 prepare_artifacts: build_lambda copy_artifacts
 
 build_tf_image:
-	docker build -t registry.gitlab.com/r1chjames/visitor-terraform/terraform_runner:0.12.23 .
+	docker build -t registry.gitlab.com/r1chjames/uk-train-departure-bridge/terraform_runner:0.12.23 .
 	docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
-	docker push registry.gitlab.com/r1chjames/visitor-terraform/terraform_runner:0.12.23
+	docker push registry.gitlab.com/r1chjames/uk-train-departure-bridge/terraform_runner:0.12.23

@@ -13,8 +13,8 @@ import (
 
 func createIotSession() *iotdataplane.IoTDataPlane {
 	awsSession, _ := session.NewSession()
-	return iotdataplane.New(awsSession, &aws.Config {
-		Region: aws.String("eu-west-1"),
+	return iotdataplane.New(awsSession, &aws.Config{
+		Region:   aws.String("eu-west-1"),
 		Endpoint: aws.String("https://a1jht9wg8u2etb-ats.iot.eu-west-1.amazonaws.com"),
 	})
 }
@@ -30,6 +30,7 @@ func PublishMessageToIot(appConfig models.AppConfig, message models.ParsedRespon
 		Payload: payload,
 		Qos:     &qos,
 		Topic:   &appConfig.IotTopic,
+		Retain:  aws.Bool(true),
 	}
 
 	client := createIotSession()

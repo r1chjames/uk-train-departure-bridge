@@ -1,12 +1,10 @@
 package models
 
 type AppConfig struct {
-	DepartureStation string
+	DepartureStation   string
 	DestinationStation string
-	FutureTrainCount int
-	OperatingHours string
-	IotTopic string
-	TransportApiUrl string
-	ApiKey string
-	AppId string
+	FutureTrainCount   int
+	IotTopic           string
+	Username           string
+	Password           string
 }

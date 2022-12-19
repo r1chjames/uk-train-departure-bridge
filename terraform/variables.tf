@@ -15,10 +15,6 @@ variable future_train_count {
   type = number
 }
 
-variable operating_hours {
-  type = string
-}
-
 variable departures_topic {
   type = string
 }
@@ -27,15 +23,14 @@ variable commands_topic {
   type = string
 }
 
-
 variable refresh_interval_in_mins {
   type = string
 }
 
-variable transport_api_key {
+variable api_username {
   type = string
 }
 
-variable transport_api_app_id {
+variable api_password {
   type = string
 }

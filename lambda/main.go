@@ -23,15 +23,11 @@ func fetchTrainTimes() (string, error) {
 
 func parseAppVariables() models.AppConfig {
 	return models.AppConfig{
-		DepartureStation:   utils.GetStringEnv("DEPARTURE_STATION", "KGX"),
+		DepartureStation:   utils.GetStringEnv("DEPARTURE_STATION", "WDS"),
 		DestinationStation: utils.GetStringEnv("DESTINATION_STATION", "LDS"),
-		FutureTrainCount: utils.GetIntEnv("FUTURE_TRAIN_COUNT", 3),
-		OperatingHours:     utils.GetStringEnv("OPERATING_HOURS", "06_22"),
-		IotTopic: utils.GetStringEnv("IOT_TOPIC", "LDS"),
-		TransportApiUrl: "https://transportapi.com/v3/uk/places.json",
-		ApiKey:             utils.GetStringEnv("API_KEY", ""),
-		AppId:              utils.GetStringEnv("APP_ID", ""),
+		FutureTrainCount:   utils.GetIntEnv("FUTURE_TRAIN_COUNT", 3),
+		IotTopic:           utils.GetStringEnv("IOT_TOPIC", "LDS"),
+		Username:           utils.GetStringEnv("USERNAME", ""),
+		Password:           utils.GetStringEnv("PASSWORD", ""),
 	}
 }
-
-
