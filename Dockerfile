@@ -4,7 +4,7 @@ MAINTAINER "Richard James <richjames11@gmail.com>"
 ENV TERRAFORM_VERSION=0.12.23
 ENV TERRAFORM_SHA256SUM=b337c885526a8a653075551ac5363a09925ce9cf141f4e9a0d9f497842c85ad5
 
-RUN apk add --update git bash wget make go nodejs npm py-pip python3
+RUN apk add --update git bash wget make go nodejs npm py-pip python3 zip
 RUN pip install --upgrade pip awscli
 ADD https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip ./
 ADD https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_SHA256SUMS ./

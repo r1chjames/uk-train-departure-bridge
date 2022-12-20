@@ -52,6 +52,10 @@ func QueryUpcomingTrains(config models.AppConfig) (interface{}, error) {
 	return parseFullRequest(config, entireStruct), nil
 }
 
+func parseDepartureTime(time string) string {
+	return fmt.Sprintf("%s:%s", time[0:2], time[2:4])
+}
+
 func parseFullRequest(config models.AppConfig, response models.ApiResponse) models.ParsedResponse {
 	var fullResponse models.ParsedResponse
 	for i, train := range response.Services {
@@ -60,12 +64,12 @@ func parseFullRequest(config models.AppConfig, response models.ApiResponse) mode
 			if train.LocationDetail.GbttBookedDeparture == train.LocationDetail.RealtimeDeparture {
 				status = "On Time"
 			} else {
-				status = fmt.Sprintf("Exp %s", train.LocationDetail.RealtimeArrival)
+				status = fmt.Sprintf("Exp %s", parseDepartureTime(train.LocationDetail.RealtimeArrival))
 			}
 
 			departure := models.Departures{
 				Notes:              fmt.Sprintf("Operated by %s", train.AtocName),
-				AimedDepartureTime: train.LocationDetail.GbttBookedDeparture,
+				AimedDepartureTime: parseDepartureTime(train.LocationDetail.GbttBookedDeparture),
 				DestinationName:    train.LocationDetail.Destination[0].Description,
 				CallingAt:          train.LocationDetail.Destination[0].Description,
 				Status:             status,
