@@ -2,7 +2,7 @@
 
 BUILD := $(shell git rev-parse --short HEAD)
 PROJECTNAME := $(shell basename "$(PWD)")
-COMPILEDBINNAME := main
+COMPILEDBINNAME := bootstrap
 ENTRYPOINT := main.go
 
 # Go related variables.
@@ -45,7 +45,7 @@ go-compile: go-get go-build
 
 go-build:
 	@echo "  >  Building binary..."
-	GOPATH=$(GOPATH) GOBIN=$(GOBIN) go build $(LDFLAGS) -o $(GOBIN)/$(COMPILEDBINNAME) $(ENTRYPOINT)
+	GOPATH=$(GOPATH) GOBIN=$(GOBIN) go build $(LDFLAGS) -o $(GOBASE)/$(COMPILEDBINNAME) $(ENTRYPOINT)
 
 go-generate:
 	@echo "  >  Generating dependency files..."

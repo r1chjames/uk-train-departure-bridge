@@ -3,7 +3,7 @@ resource "aws_lambda_function" "uk_train_departure_lambda" {
   function_name = "${lower(var.env)}-uk-train-departure-lambda"
   role          = aws_iam_role.uk_train_departure_bridge_lambda_iam_execution_role.arn
   handler       = "main"
-  runtime       = "go1.x"
+  runtime       = "provided.al2"
   memory_size   = 128
 
   environment {

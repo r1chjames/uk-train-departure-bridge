@@ -23,7 +23,7 @@ lint: fmt
 copy_artifacts:
 	rm -rf terraform/build/
 	mkdir -p terraform/build
-	zip -j terraform/build/uk-train-departure-lambda.zip lambda/bin/main
+	zip -j terraform/build/uk-train-departure-lambda.zip lambda/bootstrap
 	
 build_lambda:
 	cd lambda && \
