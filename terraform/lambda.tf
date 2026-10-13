@@ -19,26 +19,17 @@ resource "aws_lambda_function" "uk_train_departure_lambda" {
   source_code_hash = filebase64sha256("build/uk-train-departure-lambda.zip")
 }
 
-data "template_file" "iot_client_write_policy_template" {
-  template = file("${path.module}/templates/lambda_iot_write_policy.json.tpl")
-  vars = {
-    account_id = data.aws_caller_identity.current.account_id
-  }
-}
-
 resource "aws_iam_policy" "iot_write_policy" {
-  name   = "iot_write_policy"
-  path   = "/"
-  policy = data.template_file.iot_client_write_policy_template.rendered
-}
-
-data "template_file" "coworker_lambda_iam_execution_role" {
-  template = file("${path.module}/templates/lambda_iam_execution_role.json.tpl")
+  name = "iot_write_policy"
+  path = "/"
+  policy = templatefile("${path.module}/templates/lambda_iot_write_policy.json.tpl", {
+    account_id = data.aws_caller_identity.current.account_id
+  })
 }
 
 resource "aws_iam_role" "uk_train_departure_bridge_lambda_iam_execution_role" {
   name               = "uk_train_departure_bridge_lambda_iam_execution_role"
-  assume_role_policy = data.template_file.coworker_lambda_iam_execution_role.rendered
+  assume_role_policy = templatefile("${path.module}/templates/lambda_iam_execution_role.json.tpl", {})
 }
 
 resource "aws_iam_policy_attachment" "iot_client_write_policy" {

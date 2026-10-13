@@ -1,10 +1,17 @@
+terraform {
+  required_version = ">= 1.6"
+
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 6.0"
+    }
+  }
+}
+
 provider "aws" {
   region      = "eu-west-1"
   max_retries = 20
-}
-
-terraform {
-  required_version = ">= 0.12"
 }
 
 data "aws_caller_identity" "current" {}

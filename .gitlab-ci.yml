@@ -1,20 +1,22 @@
-image:
-  name: registry.gitlab.com/r1chjames/uk-train-departure-bridge/terraform_runner:0.12.23
-  entrypoint:
-    - '/usr/bin/env'
-    - 'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
-
-before_script:
-  - make init
-
 stages:
   - build
   - tf_validate
   - tf_plan
   - tf_apply
 
+.terraform_job:
+  image:
+    name: hashicorp/terraform:1.16.5
+    entrypoint: [""]
+  before_script:
+    - apk add --no-cache make
+    - make init
+
 build:
   stage: build
+  image: golang:1.27-alpine
+  before_script:
+    - apk add --no-cache make zip
   script:
     - make prepare_artifacts
   artifacts:
@@ -22,6 +24,7 @@ build:
       - terraform/build/
 
 tf_validate:
+  extends: .terraform_job
   stage: tf_validate
   script:
     - make validate
@@ -29,6 +32,7 @@ tf_validate:
     - build
 
 tf_plan:
+  extends: .terraform_job
   stage: tf_plan
   script:
     - make plan
@@ -43,6 +47,7 @@ tf_plan:
       - terraform/planfile
 
 tf_apply:
+  extends: .terraform_job
   stage: tf_apply
   script:
     - make apply

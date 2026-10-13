@@ -30,8 +30,3 @@ build_lambda:
 	GOOS=linux GOARCH=amd64 CGO_ENABLED=0 make compile
 
 prepare_artifacts: build_lambda copy_artifacts
-
-build_tf_image:
-	docker build -t registry.gitlab.com/r1chjames/uk-train-departure-bridge/terraform_runner:0.12.23 .
-	docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
-	docker push registry.gitlab.com/r1chjames/uk-train-departure-bridge/terraform_runner:0.12.23

@@ -32,6 +32,17 @@ If you are using GitLab CI, these will need to be set up as CI variables. If you
 
 * A successful Terraform apply will print out the certificate, private key, and public keys of the IoT client that can then be used to connect and subscribe to the IoT MQTT topic. An example of how to do this can be found [here](https://aws.amazon.com/blogs/compute/building-an-aws-iot-core-device-using-aws-serverless-and-an-esp32/)
 
+* Terraform 1.6 or newer is required. The state was originally written by Terraform 0.12, so it needs migrating once with Terraform 0.13 before 1.x can read it:
+
+```bash
+cd terraform
+aws s3 cp s3://uk-train-departure-tf-state/state/terraform-state ~/terraform-state-0.12.bak
+terraform013 init
+terraform013 state replace-provider -auto-approve registry.terraform.io/-/aws registry.terraform.io/hashicorp/aws
+terraform013 state replace-provider -auto-approve registry.terraform.io/-/template registry.terraform.io/hashicorp/template
+terraform init && terraform plan
+```
+
 
 ## To do
 * Provide Arduino sketch that subscribes to MQTT topic and displays train info in a format similar to the UK train platform signs.

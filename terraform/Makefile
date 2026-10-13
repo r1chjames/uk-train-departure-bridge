@@ -1,9 +1,7 @@
 init:
 	rm -rf .terraform
 	terraform --version
-	mkdir -p ./creds
-	echo ${SERVICEACCOUNT} | base64 -d > ./creds/serviceaccount.json
-	terraform init
+	terraform init -input=false
 
 plan:
 	terraform plan \
