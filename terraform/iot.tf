@@ -31,13 +31,16 @@ resource "aws_iot_policy_attachment" "client_subscribe" {
 }
 
 output "platform_sign_1_certificate_pem" {
-  value = aws_iot_certificate.platform_sign_1.certificate_pem
+  value     = aws_iot_certificate.platform_sign_1.certificate_pem
+  sensitive = true
 }
 
 output "platform_sign_1_public_key" {
-  value = aws_iot_certificate.platform_sign_1.public_key
+  value     = aws_iot_certificate.platform_sign_1.public_key
+  sensitive = true
 }
 
 output "platform_sign_1_private_key" {
-  value = aws_iot_certificate.platform_sign_1.private_key
+  value     = aws_iot_certificate.platform_sign_1.private_key
+  sensitive = true
 }

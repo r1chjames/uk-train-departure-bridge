@@ -28,5 +28,6 @@ variable "refresh_interval_in_mins" {
 }
 
 variable "api_token" {
-  type = string
+  type      = string
+  sensitive = true
 }
