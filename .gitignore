@@ -25,3 +25,6 @@ terraform/planfile
 
 creds/
 .idea/
+
+# Built Lambda binary
+lambda/bootstrap

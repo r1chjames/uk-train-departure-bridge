@@ -13,8 +13,6 @@ GOFILES := $(wildcard *.go)
 
 # Make is verbose in Linux. Make it silent.
 MAKEFLAGS += --silent
-# Redirect error output to a file, so we can show it in development mode.
-STDERR := /tmp/.$(PROJECTNAME)-stderr.txt
 
 .PHONY: build clean deploy
 
@@ -27,10 +25,7 @@ build: clean install
 
 ## compile: Compile the binary.
 compile:
-	@-touch $(STDERR)
-	@-rm $(STDERR)
-	@-$(MAKE) -s go-compile 2> $(STDERR)
-	@cat $(STDERR) | sed -e '1s/.*/\nError:\n/'  | sed 's/make\[.*/ /' | sed "/^/s/^/     /" 1>&2
+	@$(MAKE) -s go-compile
 
 ## exec: Run given command, wrapped with custom GOPATH. e.g; make exec run="go test ./..."
 exec:
