@@ -27,10 +27,6 @@ variable refresh_interval_in_mins {
   type = string
 }
 
-variable api_username {
-  type = string
-}
-
-variable api_password {
+variable api_token {
   type = string
 }

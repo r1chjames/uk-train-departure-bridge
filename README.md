@@ -1,6 +1,6 @@
 # UK Train Departure Bridge
 
-This repo contains a set of deployable AWS components that provide the ability to perform API requests to the UK Transport API and write the data to an IoT (MQTT) topic to allow simple IoT devices such as the ESP32 to subscribe and receive this data.
+This repo contains a set of deployable AWS components that provide the ability to perform API requests to the UK Realtime Trains API and write the data to an IoT (MQTT) topic to allow simple IoT devices such as the ESP32 to subscribe and receive this data.
 
 Inspired by https://github.com/balenalabs/uk-train-departure-display
 
@@ -11,18 +11,17 @@ The AWS components are deployed using Terraform which can be executed using the 
 
 ### Prerequisites
 * AWS account with an IAM user created that has permissions that allow Terraform to create relevant resources. Follow the tutorial [here](https://medium.com/slalom-technology/creating-your-first-terraform-infrastructure-on-aws-ad986f952951).
-* UK Transport API. You can register for a developer account [here](https://developer.transportapi.com/signup). The free acocunt is valid for 1000 API requests per day.
+* Realtime Trains API. Sign up for an account and request a token on the [API portal](https://api-portal.rtt.io). The API is rate limited (currently 10 requests per minute, 100 per hour, 1000 per day).
 
 ### Setup
-* Five variables are required:
+* Four variables are required:
 
 | Variable | Description | Example |
 | -------- | ----------- | ------- |
 | AWS_ACCESS_KEY_ID | Obtained from IAM when creating the Terraform user | AKIAIOSFODNN7EXAMPLE |
 | AWS_SECRET_ACCESS_KEY | Obtained from IAM when creating the Terraform user | wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY |
 | ENVIRONMENT | Informs Terraform which .tfvars file to use. Just set to DEV if you're using the defaults | DEV |
-| TF_VAR_transport_api_app_id | Terraform variable that contains the Transport API Application ID| a2473907 |
-| TF_VAR_transport_api_key | Terraform variable that contains the Transport API Application Keys | ZS2XKMQT5QEF3VSX8CJTURBR2LVTDDH9 |
+| TF_VAR_api_token | Terraform variable that contains the token issued by the Realtime Trains API portal. The portal issues a refresh token, which the Lambda exchanges for a short life access token on each run | <token-from-api-portal> |
 
 If you are using GitLab CI, these will need to be set up as CI variables. If you are deploying using Terraform locally, these need to be set up as environment variables or passed into the running process.
 

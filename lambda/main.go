@@ -16,9 +16,11 @@ func main() {
 
 func fetchTrainTimes() (string, error) {
 	appConfig := parseAppVariables()
-	upcomingTrains, _ := implementation.QueryUpcomingTrains(appConfig)
-	err := implementation.PublishMessageToIot(appConfig, upcomingTrains.(models.ParsedResponse))
-	return "Completed", err
+	upcomingTrains, err := implementation.QueryUpcomingTrains(appConfig)
+	if err != nil {
+		return "", err
+	}
+	return "Completed", implementation.PublishMessageToIot(appConfig, upcomingTrains)
 }
 
 func parseAppVariables() models.AppConfig {
@@ -27,7 +29,6 @@ func parseAppVariables() models.AppConfig {
 		DestinationStation: utils.GetStringEnv("DESTINATION_STATION", "LDS"),
 		FutureTrainCount:   utils.GetIntEnv("FUTURE_TRAIN_COUNT", 3),
 		IotTopic:           utils.GetStringEnv("IOT_TOPIC", "LDS"),
-		Username:           utils.GetStringEnv("USERNAME", ""),
-		Password:           utils.GetStringEnv("PASSWORD", ""),
+		Token:              utils.GetStringEnv("API_TOKEN", ""),
 	}
 }

@@ -5,6 +5,5 @@ type AppConfig struct {
 	DestinationStation string
 	FutureTrainCount   int
 	IotTopic           string
-	Username           string
-	Password           string
+	Token              string
 }
